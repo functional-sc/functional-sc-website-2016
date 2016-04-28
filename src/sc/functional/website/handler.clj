@@ -19,10 +19,20 @@
           :else                     (page/article-page wikipage))) )
 
 (defroutes app-routes
-  ;;(GET "/" [] "Hello World")
-  (GET "/" [] (:html (wiki/fetch-article "Introduction")))
+  ;;(GET "/" [] (:html (wiki/fetch-article "Introduction")))
+  ;;(GET "/" [] ((template-article 'foo)))
+  (GET "/" [] (page/home-page))
+
+  ;; article images are in the content diretory and are same basefilename
+  (route/files     "/content/" {:root "./content"})
+
+  ;; publish all files in src/html as if they were root
+  (route/files     "/" {:root "./src/html"})
+
+  ;; last chance, perhaps there is an article
   (GET "/*" {params :params :as request} (process-wiki-or-404 request))
-  (route/not-found "Not Found"))
+  (route/not-found "Not Found")
+  )
 
 (def app
   ;; see https://github.com/ring-clojure/ring-defaults
