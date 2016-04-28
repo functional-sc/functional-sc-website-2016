@@ -56,26 +56,57 @@
 
 (defn wrap-mtg-url [s m] (str "<a target=\"_blank\" href=\"" (str (:event-url m)) "\">" s "</a>") )
 
+(defn take-first [s]
+  (apply str (rest (rest (rest (first (clojure.string/split s #"</p>")))))))
+
+(defn take-first-h [s]
+  (str "<p>" (apply str (rest (rest (rest (first (clojure.string/split s #"</p>"))))))"</p>") )
+
 (defn template-home []
   (let [wiki-article (wiki/fetch-article "FunctionalThinking")
+        a2           (wiki/fetch-article "SoYouWantToLearnJava")
+        a3           (wiki/fetch-article "ParsingTextwithaVirtualMachine")
+        a4           (wiki/fetch-article "DontFearTheMonad")
         meeting      (first (meetup/fetch-upcoming-meetups))
         ]
       (enlive/template
    "html/home.html" []
    [:title]                         (enlive/content (str "Functional SC: Functional Programming in the Silicon Harbor"))
    [:h4 :span.litertxt]             (enlive/content (make-saying))
-   
+
+   ;; TODO unfuck this
    ;; article1
    [:div.article1.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title wiki-article))
    [:div.article1.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title wiki-article) ".jpg"))
    [:div.article1.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata wiki-article))))
    [:div.article1.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title wiki-article))
-   [:div.article1.col-md-4.col-xs-12.paras :p.date]  (enlive/content "Concepts of functional programming is made much harder when the developer is also trying to learn a new language, like Haskell, Scala or Clojure at the same time. With that in mind, we focus on relating functional concepts in a common language: Java.")
+   [:div.article1.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html wiki-article)))
+
+   ;; article2
+   [:div.article2.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title a2))
+   [:div.article2.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title a2) ".jpg"))
+   [:div.article2.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a2))))
+   [:div.article2.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a2))
+   [:div.article2.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a2)))
+
+   ;; article3
+   [:div.article3.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title a3))
+   [:div.article3.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title a3) ".jpg"))
+   [:div.article3.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a3))))
+   [:div.article3.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a3))
+   [:div.article3.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a3)))
+
+   ;; article4
+   [:div.article4.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title a4))
+   [:div.article4.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title a4) ".jpg"))
+   [:div.article4.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a4))))
+   [:div.article4.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a4))
+   [:div.article4.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a4)))
 
    ;; upcoming meeting
    [:div.banner3 :div.container :div.row.features]  (enlive/html-content (wrap-mtg-url (str "Join us " (tformat/unparse (.withZone (tformat/formatter "EEEE, MMMM d, h:mm a") (time/time-zone-for-id "America/New_York")) (:time meeting))) meeting))
    [:div.banner3 :div.container :div.row.bck]       (enlive/html-content (wrap-mtg-url (:title meeting) meeting))
-   [:div.banner3 :div.container :div.row.handcraft] (enlive/html-content (str (str "<p>" (wrap-mtg-url (apply str (rest (rest (rest (first (clojure.string/split (:description meeting) #"</p>")))))) meeting ) "</p>")) "<p>" (wrap-mtg-url "read more..." meeting) "</p>")
+   [:div.banner3 :div.container :div.row.handcraft] (enlive/html-content (str (str "<p>" (wrap-mtg-url (take-first (:description meeting)) meeting) "</p>")) "<p>" (wrap-mtg-url "read more..." meeting) "</p>")
    )
     )
 )
