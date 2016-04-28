@@ -980,3 +980,37 @@ text-align: center;
 @media screen and (min-width: 768px) and (max-width: 991px) { .ban2content > .col-md-4{ height: 150px; } }
 /* /Revised Bullet Height */ 
 
+
+/* meeting selections */
+html body div.banner3 div.container div.row.features a,
+html body div.banner3 div.container div.row.features a:visited {
+    color: #FFF;
+}
+
+html body div.banner3 div.container div.row.features a:focus,
+html body div.banner3 div.container div.row.features a:hover {
+    color: #CCC;
+    text-decoration: none;
+}
+
+html body div.banner3 div.container div.row.handcraft p a,
+html body div.banner3 div.container div.row.handcraft p a:visited {
+    color: #FFF;
+}
+
+html body div.banner3 div.container div.row.handcraft p a:focus,
+html body div.banner3 div.container div.row.handcraft p a:hover {
+    color: #CCC;
+    text-decoration: none;
+}
+
+html body div.banner3 div.container div.row.bck a,
+html body div.banner3 div.container div.row.bck a:visited {
+    color: #FFF;
+}
+
+html body div.banner3 div.container div.row.bck a:focus,
+html body div.banner3 div.container div.row.bck a:hover {
+    color: #CCC;
+    text-decoration: none;
+}
