@@ -50,8 +50,8 @@
   (rand-nth ["A better way to write software"
              "Modern programming in practice"
              "Elegant weapons for a civilized age"
-             "The best of Charleston technology"
-             "Creating amazing things"
+             "Charleston, South Carolina"
+             "Create amazing things"
              "Think different"
              ]))
 
