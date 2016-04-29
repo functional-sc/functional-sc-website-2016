@@ -739,7 +739,7 @@ background-image: url(images/test_phn.jpg) !important;
 }
 
 .paras{
-	margin-bottom: 40px;
+	margin-bottom: 60px;
 }
 /*----------------------
 ---------  /News ---------
@@ -1014,3 +1014,8 @@ html body div.banner3 div.container div.row.bck a:hover {
     color: #CCC;
     text-decoration: none;
 }
+
+div.content h5 {
+    margin-top: 0;
+}
+
