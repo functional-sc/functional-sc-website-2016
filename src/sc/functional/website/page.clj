@@ -52,6 +52,7 @@
              "Elegant weapons for a civilized age"
              "The best of Charleston technology"
              "Creating amazing things"
+             "Think different"
              ]))
 
 (defn wrap-mtg-url [s m] (str "<a target=\"_blank\" href=\"" (str (:event-url m)) "\">" s "</a>") )
@@ -67,6 +68,7 @@
         a2           (wiki/fetch-article "SoYouWantToLearnJava")
         a3           (wiki/fetch-article "ParsingTextwithaVirtualMachine")
         a4           (wiki/fetch-article "DontFearTheMonad")
+        a5           (wiki/fetch-article "ThinkDifferent")
         meeting      (first (meetup/fetch-upcoming-meetups))
         ]
       (enlive/template
@@ -102,6 +104,13 @@
    [:div.article4.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a4))))
    [:div.article4.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a4))
    [:div.article4.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a4)))
+
+   ;; article5
+   [:div.article5.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title a5))
+   [:div.article5.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title a5) ".jpg"))
+   [:div.article5.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a5))))
+   [:div.article5.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a5))
+   [:div.article5.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a5)))
 
    ;; upcoming meeting
    [:div.banner3 :div.container :div.row.features]  (enlive/html-content (wrap-mtg-url (str "Join us " (tformat/unparse (.withZone (tformat/formatter "EEEE, MMMM d, h:mm a") (time/time-zone-for-id "America/New_York")) (:time meeting))) meeting))
