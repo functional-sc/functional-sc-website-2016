@@ -51,7 +51,15 @@
 (defn fetch-members []
   (filter (fn [person] (not (empty? (:photo person))))
           (let [data (fetch-url "https://api.meetup.com/2/members.xml?group_urlname=Functional-SC&key=5247666759864d49d1e1a2b263463")]
-            (map #(hash-map :name  (decomp-item % [:item :> :name])
-                            :photo (decomp-item % [:item :> :photo :> :thumb_link]))
+            (map #(hash-map :name     (decomp-item % [:item :> :name])
+                            :photo    (decomp-item % [:item :> :photo :> :photo_link])
+                            :joined-date (time/to-time-zone (tcoerce/from-long (str->long (decomp-item % [:item :> :joined]))) (time/time-zone-for-id "America/New_York"))
+                            :hometown (decomp-item % [:item :> :hometown])
+                            )
                  (enlive/select data #{[:item]})))))
+
+
+(def members (memoize #(fetch-members)))
+
+(defn fetch-cached-members [] (members))
 

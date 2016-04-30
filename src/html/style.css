@@ -760,7 +760,6 @@ background-image: url(images/test_phn.jpg) !important;
 .intouch{
 	background-image: url(images/touch_bg.jpg);
 	padding-bottom: 60px;
-	
 }
 
 .intouch h2{
@@ -1019,3 +1018,8 @@ div.content h5 {
     margin-top: 0;
 }
 
+/* Revised Article Height */
+@media screen and (min-width: 0px) and (max-width: 767px)   { .paras { height: 640px; } .content .img-responsive { width: 640px; height: 480px; margin: auto; } }
+@media screen and (min-width: 768px) and (max-width: 991px) { .paras { height: 640px; } .content .img-responsive { width: 640px; height: 480px; margin: auto; } }
+@media screen and (min-width: 992px)                        { .paras { height: 450px; } .content .img-responsive { width: 351px; height: 233px; margin: auto; } }
+/* Revised Article Height */

@@ -69,7 +69,11 @@
         a3           (wiki/fetch-article "ParsingTextwithaVirtualMachine")
         a4           (wiki/fetch-article "DontFearTheMonad")
         a5           (wiki/fetch-article "ThinkDifferent")
-        meeting      (first (meetup/fetch-upcoming-meetups))
+        meeting      (meetup/fetch-current-meetup)
+        people       (shuffle (meetup/fetch-cached-members))
+        p1           (first people)
+        p2           (second people)
+        p3           (last people)
         ]
       (enlive/template
    "html/home.html" []
@@ -77,6 +81,26 @@
    [:h4 :span.litertxt]             (enlive/content (make-saying))
 
    ;; TODO unfuck this
+   [:span.person1.col-sm-4 :span.name]          (enlive/content (first (clojure.string/split (:name p1) #"\s")))
+   [:span.person1.col-sm-4 :img.img-responsive] (enlive/set-attr :src (:photo p1))   
+   [:span.person1.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p1)) "" "Hometown:"))
+   [:span.person1.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p1))
+   [:span.person1.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p1)) )
+
+   [:span.person2.col-sm-4 :span.name]          (enlive/content (first (clojure.string/split (:name p2) #"\s")))
+   [:span.person2.col-sm-4 :img.img-responsive] (enlive/set-attr :src (:photo p2))      
+   [:span.person2.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p2)) "" "Hometown:"))
+   [:span.person2.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p2))
+   [:span.person2.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p2)) )
+
+   [:span.person3.col-sm-4 :span.name]          (enlive/content (first (clojure.string/split (:name p3) #"\s")))
+   [:span.person3.col-sm-4 :img.img-responsive] (enlive/set-attr :src (:photo p3))         
+   [:span.person3.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p3)) "" "Hometown:"))
+   [:span.person3.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p3))
+   [:span.person3.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p3)) )
+
+   
+   ;; TODO unfuck this too
    ;; article1
    [:div.article1.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title wiki-article))
    [:div.article1.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title wiki-article) ".jpg"))
@@ -116,9 +140,7 @@
    [:div.banner3 :div.container :div.row.features]  (enlive/html-content (wrap-mtg-url (str "Join us " (tformat/unparse (.withZone (tformat/formatter "EEEE, MMMM d, h:mm a") (time/time-zone-for-id "America/New_York")) (:time meeting))) meeting))
    [:div.banner3 :div.container :div.row.bck]       (enlive/html-content (wrap-mtg-url (:title meeting) meeting))
    [:div.banner3 :div.container :div.row.handcraft] (enlive/html-content (str (str "<p>" (wrap-mtg-url (take-first (:description meeting)) meeting) "</p>")) "<p>" (wrap-mtg-url "read more..." meeting) "</p>")
-   )
-    )
-)
+   )))
 
 (defn home-page []
   ;;(slurp "src/html/home.html")
