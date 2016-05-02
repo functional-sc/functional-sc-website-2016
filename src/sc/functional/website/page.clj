@@ -49,7 +49,7 @@
 (defn make-saying []
   (rand-nth ["A better way to write software"
              "Modern programming in practice"
-             "Elegant weapons for a civilized age"
+             "Elegant weapons for a more civilized age"
              "Charleston, South Carolina"
              "Create amazing things"
              "Think different"
