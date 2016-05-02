@@ -1,7 +1,8 @@
 (ns sc.functional.website.meetup
   (:require [net.cgrand.enlive-html :as enlive]
             [clj-time.core          :as time]
-            [clj-time.coerce        :as tcoerce]))
+            [clj-time.coerce        :as tcoerce])
+  (:use sc.functional.website.meetup-creds))
 
 ;; "42" => 42, default 0
 (defn str->int [str]
@@ -38,19 +39,19 @@
             :event-url    (decomp-item item [:item :> :event_url])))
 
 (defn fetch-upcoming-meetups []
-  (let [data (fetch-url "http://api.meetup.com/2/events.xml?status=upcoming&group_urlname=Functional-SC&key=5247666759864d49d1e1a2b263463")]
+  (let [data (fetch-url (str "http://api.meetup.com/2/events.xml?status=upcoming&group_urlname=Functional-SC&key=" api-key))]
     (map #(make-event %)
          (enlive/select data #{[:item]}))
     ))
 
 (defn fetch-current-meetup []
-  (let [data (fetch-url "http://api.meetup.com/2/events.xml?group_urlname=Functional-SC&key=5247666759864d49d1e1a2b263463")
+  (let [data (fetch-url (str "http://api.meetup.com/2/events.xml?group_urlname=Functional-SC&key=" api-key))
         item (enlive/select data #{[:items (enlive/nth-child 1)]})]
     (make-event item)))
 
 (defn fetch-members []
   (filter (fn [person] (not (empty? (:photo person))))
-          (let [data (fetch-url "https://api.meetup.com/2/members.xml?group_urlname=Functional-SC&key=5247666759864d49d1e1a2b263463")]
+          (let [data (fetch-url (str "https://api.meetup.com/2/members.xml?group_urlname=Functional-SC&key=" api-key))]
             (map #(hash-map :name     (decomp-item % [:item :> :name])
                             :photo    (decomp-item % [:item :> :photo :> :photo_link])
                             :joined-date (time/to-time-zone (tcoerce/from-long (str->long (decomp-item % [:item :> :joined]))) (time/time-zone-for-id "America/New_York"))

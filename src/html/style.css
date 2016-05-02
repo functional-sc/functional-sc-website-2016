@@ -1018,6 +1018,26 @@ div.content h5 {
     margin-top: 0;
 }
 
+/* membership */
+div.banner4 div.container a,
+div.banner4 div.container a:visited {
+    color: #000;
+}
+
+div.banner4 div.container a:focus, 
+div.banner4 div.container a:hover {
+    color: #CCC;
+    text-decoration: none;
+}
+
+/* members */
+span.person1.col-sm-4 a, span.person1.col-sm-4 a:visited { color: #000; }
+span.person1.col-sm-4 a:focus, span.person1.col-sm-4 a:hover { color: #CCC; text-decoration: none; }
+span.person2.col-sm-4 a, span.person1.col-sm-4 a:visited { color: #000; }
+span.person2.col-sm-4 a:focus, span.person1.col-sm-4 a:hover { color: #CCC; text-decoration: none; }
+span.person3.col-sm-4 a, span.person1.col-sm-4 a:visited { color: #000; }
+span.person3.col-sm-4 a:focus, span.person1.col-sm-4 a:hover { color: #CCC; text-decoration: none; }
+
 /* Revised Article Height */
 @media screen and (min-width: 0px) and (max-width: 767px)   { .paras { height: 640px; } .content .img-responsive { width: 640px; height: 480px; margin: auto; } }
 @media screen and (min-width: 768px) and (max-width: 991px) { .paras { height: 640px; } .content .img-responsive { width: 640px; height: 480px; margin: auto; } }
