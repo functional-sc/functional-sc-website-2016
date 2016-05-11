@@ -1043,3 +1043,23 @@ span.person3.col-sm-4 a:focus, span.person1.col-sm-4 a:hover { color: #CCC; text
 @media screen and (min-width: 768px) and (max-width: 991px) { .paras { height: 640px; } .content .img-responsive { width: 640px; height: 480px; margin: auto; } }
 @media screen and (min-width: 992px)                        { .paras { height: 450px; } .content .img-responsive { width: 351px; height: 233px; margin: auto; } }
 /* Revised Article Height */
+
+/*--- Map Scroll ---*/
+
+@keyframes animatedBackground {
+    from { background-position: 100% 0%; }
+    to { background-position: 0% 0%; }
+}
+
+.banner2 {
+    background-image: url(images/map.jpg);
+    background-position: 0px 0px;
+    background-repeat: repeat-x;
+/*    animation: animatedBackground 20s linear infinite;  */
+}
+
+@media screen and (min-width: 0px) and (max-width: 767px)   { .banner2 { animation: animatedBackground 70s linear infinite; } }
+@media screen and (min-width: 768px) and (max-width: 991px) { .banner2 { animation: animatedBackground 30s linear infinite; } }
+@media screen and (min-width: 992px)                        { .banner2 { animation: animatedBackground 20s linear infinite; } }
+
+/*--- /Map Scroll ---*/ 

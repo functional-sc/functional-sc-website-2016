@@ -136,6 +136,13 @@
    [:div.article5.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a5))
    [:div.article5.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a5)))
 
+   ;; article6 (copy of 1)
+   [:div.article6.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title wiki-article))
+   [:div.article6.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title wiki-article) ".jpg"))
+   [:div.article6.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata wiki-article))))
+   [:div.article6.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title wiki-article))
+   [:div.article6.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html wiki-article)))
+   
    ;; upcoming meeting
    [:div.banner3 :div.container :div.row.features]  (enlive/html-content (wrap-mtg-url (str "Join us " (tformat/unparse (.withZone (tformat/formatter "EEEE, MMMM d, h:mm a") (time/time-zone-for-id "America/New_York")) (:time meeting))) meeting))
    [:div.banner3 :div.container :div.row.bck]       (enlive/html-content (wrap-mtg-url (:title meeting) meeting))
