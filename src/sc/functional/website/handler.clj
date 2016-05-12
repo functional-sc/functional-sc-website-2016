@@ -19,15 +19,14 @@
           :else                     (page/article-page wikipage))) )
 
 (defroutes app-routes
-  ;;(GET "/" [] (:html (wiki/fetch-article "Introduction")))
-  ;;(GET "/" [] ((template-article 'foo)))
   (GET "/" [] (page/home-page))
 
   ;; article images are in the content diretory and are same basefilename
   (route/files     "/content/" {:root "./content"})
 
   ;; publish all files in src/html as if they were root
-  (route/files     "/" {:root "./src/html"})
+  (route/files     "/" {:root "./src/html"}) ; standalone from root dir
+  (route/resources "/" {:root "./html"})      ; war file from classes dir
 
   ;; last chance, perhaps there is an article
   (GET "/*" {params :params :as request} (process-wiki-or-404 request))
