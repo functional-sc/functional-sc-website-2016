@@ -1,16 +1,17 @@
-As seen on our [media and news feed](news) LispNYC is a thriving community with presences on:
 
-||||
-|---------------|----------------|---|
-| ![email](http://lispnyc.org/static/images/social-email-32x32.png)    | [Mailing List](http://list.lispnyc.org) | general discussions |
-| ![facebook](http://lispnyc.org/static/images/social-facebook-32x32.png) | [Facebook](http://fb.lispnyc.org) |
-| ![gplus](http://lispnyc.org/static/images/social-gplus-32x32.png) | [Google Plus](http://plus.lispnyc.org)
-| ![linked in](http://lispnyc.org/static/images/social-linkedin-32x32.png) | [Linked In](http://li.lispnyc.org)
-| ![meetup](http://lispnyc.org/static/images/social-meetup-32x32.png) | [Meetup](http://meetup.lispnyc.org)
-| ![twiter](http://lispnyc.org/static/images/social-twitter-32x32.png) | [Twitter](http://twitter.lispnyc.org)
-| ![github](http://lispnyc.org/static/images/social-github-32x32.png) | [GitHub](http://code.lispnyc.org) | Check out our code!
-| ![rss](http://lispnyc.org/static/images/social-rss-32x32.png) | [Our Technology News Stream](http://lispnyc.org/news.xml) | RSS feed
+## Join us every day 
 
-Ask a question or just speak up, we'd love to hear from you.
+We meet virtually at Charleston Tech Slack, here's how to login for a great group messaging experience:  
+	1. [Request a free invitation](http://charlestontechslack.herokuapp.com/)  
+	2. [Join the #functionalprogramming channel on Charleston Tech Slack](https://charlestontechslack.slack.com/messages/functionalprogramming/)
 
-You can also [contact us directly](Contact)
+
+## Join us every month 
+
+Personally at [Functional SC Meetup](http://meetup.com/Functional-SC). We host monthly meetings, presentations, social and technical events.
+
+## Question or Comment?
+Send us a message and recieve a response with 24 hours: **contact @ functional.sc**
+
+
+
