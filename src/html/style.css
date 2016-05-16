@@ -1081,4 +1081,12 @@ h2 strong a:hover {
 @media screen and (min-width: 768px) and (max-width: 991px) { .banner2 { animation: animatedBackground 30s linear infinite; } }
 @media screen and (min-width: 992px)                        { .banner2 { animation: animatedBackground 20s linear infinite; } }
 
-/*--- /Map Scroll ---*/ 
+/*--- /Map Scroll ---*/
+
+/* email form */
+
+div.arcontent.arcontentcopy table tbody tr td {
+    padding-bottom: 10px;
+    padding-right: 10px;
+    vertical-align: top;
+}
