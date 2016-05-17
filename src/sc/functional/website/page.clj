@@ -80,7 +80,7 @@
    [:title]                         (enlive/content (str "Functional SC: Functional Programming in the Silicon Harbor"))
    [:h4 :span.litertxt]             (enlive/content (make-saying))
 
-   ;; TODO unfuck this
+   ;; meh, is unfucking this isn't worth the effort from inside this macro?
    [:span.person1.col-sm-4 :span.name]          (enlive/content (first (clojure.string/split (:name p1) #"\s")))
    [:span.person1.col-sm-4 :img.img-responsive] (enlive/set-attr :src (:photo p1))   
    [:span.person1.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p1)) "" "Hometown:"))
@@ -98,9 +98,8 @@
    [:span.person3.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p3)) "" "Hometown:"))
    [:span.person3.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p3))
    [:span.person3.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p3)) )
-
    
-   ;; TODO unfuck this too
+   ;; TODO: unfuck this and half the source code
    ;; article1
    [:div.article1.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title wiki-article))
    [:div.article1.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title wiki-article) ".jpg"))
