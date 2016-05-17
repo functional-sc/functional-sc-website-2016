@@ -1,7 +1,9 @@
 (ns sc.functional.website.meetup
   (:require [net.cgrand.enlive-html :as enlive]
             [clj-time.core          :as time]
-            [clj-time.coerce        :as tcoerce])
+            [clj-time.coerce        :as tcoerce]
+            [clojure.core.memoize   :as memo]
+            )
   (:use sc.functional.website.meetup-creds))
 
 ;; "42" => 42, default 0
@@ -15,12 +17,17 @@
     (Long/parseLong str)
     (catch java.lang.NumberFormatException _ 0)))
 
-(defn fetch-url-raw [url] (slurp url))
+(defn in-min [n] (int (* n 1000 60)))
 
-(defn fetch-url [url]
-  (enlive/html-resource (java.net.URL. url)))
+(comment defn fetch-url-raw [url] (slurp url))
 
-(defn fetch-url-xml [url]
+(def fetch-url
+  (memo/memo-ttl
+   (fn [url]
+     (enlive/html-resource (java.net.URL. url)))
+   (in-min 10))) ; memoize for 10 minutes
+
+(comment defn fetch-url-xml [url]
   (enlive/xml-resource (java.net.URL. url)))
 
 (defn- decomp-item [data target-keyword]
