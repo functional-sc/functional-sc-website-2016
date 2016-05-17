@@ -99,7 +99,11 @@
    [:span.person3.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p3))
    [:span.person3.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p3)) )
    
-   ;; TODO: unfuck this and half the source code
+   ;; TODO: is this code or a DSL?  Yeah it's long but tearing it out would
+   ;; make is less readable.  The biggest issue is that modifying requires
+   ;; 10 identical edits, which is only going to happen 1 more time after
+   ;; we get more than 6 articles.  Still, it's ugly.
+   
    ;; article1
    [:div.article1.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title wiki-article))
    [:div.article1.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title wiki-article) ".jpg"))
