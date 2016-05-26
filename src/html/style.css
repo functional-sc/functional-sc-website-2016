@@ -784,12 +784,20 @@ background-image: url(images/test_phn.jpg) !important;
 	height: 40px;
 	margin-top: 20px;
 }
+
+
 @media screen and (min-width: 0px) and (max-width:766px) {
       .intouch{
        text-align: center;
-       background-image: url(images/touch_bg_phn.jpg);
+/*       background-image: url(images/touch_bg_phn.jpg); */
       }
 }
+
+/* twitter */
+div.twitter {
+    margin-top: 50px;
+}
+
 /*------------------------
 -------- /In Touch ------
 ------------------------*/
