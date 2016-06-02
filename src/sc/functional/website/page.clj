@@ -170,7 +170,7 @@
 
 
    ;; ads
-   [:a#parnter]   (enlive/set-attr :href (:url ad))
+   [:a#partner]   (enlive/set-attr :href (:url ad))
    [:img#partner] (enlive/set-attr :src (:path ad)) 
    )))
 
