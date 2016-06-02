@@ -5,7 +5,8 @@
             [clj-time.core                :as time]
             [clj-time.format              :as tformat]
             [clj-time.local               :as tlocal]
-   ))
+            )
+  (:import [extract.PNGExtractText]))
 
 (defn camel-caseify
      "converts hi-there to HiThere"
@@ -55,6 +56,20 @@
              "Think different"
              ]))
 
+(defn make-ad
+  "Randomly select a PNG file from the ad directory, comment is url"
+  []
+  (let [adpath "/images/partners/"
+        file   (rand-nth
+                (filter #(.endsWith (.getName %) ".png")
+                        (file-seq (clojure.java.io/file (clojure.java.io/resource (str "./html" adpath))))))
+        path   (str adpath (.getName file)) 
+        url    (extract.PNGExtractText/getComment
+                (new java.io.FileInputStream file))]
+    {:path path
+     :url  url
+     } ))
+
 (defn wrap-mtg-url [s m] (str "<a target=\"_blank\" href=\"" (str (:event-url m)) "\">" s "</a>") )
 
 (defn take-first [s]
@@ -75,6 +90,7 @@
         p1           (first people)
         p2           (second people)
         p3           (last people)
+        ad           (make-ad)
         ]
       (enlive/template
    "html/home.html" []
@@ -151,10 +167,14 @@
    [:div.banner3 :div.container :div.row.features]  (enlive/html-content (wrap-mtg-url (str "Join us " (tformat/unparse (.withZone (tformat/formatter "EEEE, MMMM d, h:mm a") (time/time-zone-for-id "America/New_York")) (:time meeting))) meeting))
    [:div.banner3 :div.container :div.row.bck]       (enlive/html-content (wrap-mtg-url (:title meeting) meeting))
    [:div.banner3 :div.container :div.row.handcraft] (enlive/html-content (str (str "<p>" (wrap-mtg-url (take-first (:description meeting)) meeting) "</p>")) "<p>" (wrap-mtg-url "read more..." meeting) "</p>")
+
+
+   ;; ads
+   [:a#parnter]   (enlive/set-attr :href (:url ad))
+   [:img#partner] (enlive/set-attr :src (:path ad)) 
    )))
 
 (defn home-page []
-  ;;(slurp "src/html/home.html")
   ((template-home)))
 
 (defn article-page [wiki-article]

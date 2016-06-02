@@ -4,7 +4,9 @@
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [smeagol.contrib.util :as wiki]
             [sc.functional.website.page :as page]
-            [clojure.java.shell :as shell]))
+            [clojure.java.shell :as shell]
+            [clojure.tools.nrepl.server :as nrepl]
+            ))
 
 
 
@@ -51,6 +53,8 @@
   ;; publish all files in src/html as if they were root
   (route/files     "/" {:root "./src/html"}) ; standalone from root dir
   (route/resources "/" {:root "./html"})      ; war file from classes dir
+
+  (GET "/debug" [] (fn [x] (future (nrepl/start-server :port 4006)) "NREPL debugging started on localhost, jack-in to :4006 kind sir."))
 
   ;; form processing
   (POST "/connect" {params :params} (mail-connect params))

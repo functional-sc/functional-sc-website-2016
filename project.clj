@@ -1,4 +1,4 @@
-(defproject sc.functional.website "0.0.91"
+(defproject sc.functional.website "1.0.01"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
@@ -12,6 +12,7 @@
                  [clj-time "0.11.0"]
                  [enlive "1.1.6"]
                  [org.clojure/tools.nrepl "0.2.11"] ; bake-in debugging
+                 [png-extract "1.0.4"] ; ads
                  ]
   :plugins [[lein-ring "0.9.7"]
             [lein-uberwar "0.2.0"]]
