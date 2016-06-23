@@ -8,8 +8,6 @@
             [clojure.tools.nrepl.server :as nrepl]
             ))
 
-
-
 (defn validate-input "Only keep specific characters in the input string."
      [input-str]
      (let [re (re-pattern "[a-zA-Z0-9\\:\\/\\-\\_\\ \\.\\?\\!\\@]")]

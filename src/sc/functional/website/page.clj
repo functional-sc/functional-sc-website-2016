@@ -34,19 +34,6 @@
      [:div.arcontentcopy]             (enlive/html-content (:html wiki-article))
      )))
 
-(defn template-article [wiki-article]
-  (let [title (make-title wiki-article)]
-    (enlive/template
-     "html/article.html" []
-     [:title]                         (enlive/content (str "Functional SC: " title))
-     [:span.col-md-5.col-xs-12.barhd] (enlive/content title)
-     [:div.article]                   (enlive/content title)
-     [:span.pubdate]                  (enlive/content (first (:date (:metadata wiki-article))))
-     [:div.col-md-10.col-xs-12 :img.img-responsive] (enlive/set-attr :src (str "content/" (:title wiki-article) ".jpg"))
-     [:span.pubtag]                   (enlive/content (apply str (interpose ", " (:tag (:metadata wiki-article)))))
-     [:div.arcontentcopy]             (enlive/html-content (:html wiki-article))
-     )))
-
 (defn make-saying []
   (rand-nth ["A better way to write software"
              "Modern programming in practice"
@@ -69,6 +56,22 @@
     {:path path
      :url  url
      } ))
+
+(defn template-article [wiki-article]
+  (let [title (make-title wiki-article)
+        ad    (make-ad)]
+    (enlive/template
+     "html/article.html" []
+     [:title]                         (enlive/content (str "Functional SC: " title))
+     [:span.col-md-5.col-xs-12.barhd] (enlive/content title)
+     [:div.article]                   (enlive/content title)
+     [:span.pubdate]                  (enlive/content (first (:date (:metadata wiki-article))))
+     [:div.col-md-10.col-xs-12 :img.img-responsive] (enlive/set-attr :src (str "content/" (camel-caseify (:title wiki-article)) ".jpg"))
+     [:span.pubtag]                   (enlive/content (apply str (interpose ", " (:tag (:metadata wiki-article)))))
+     [:div.arcontentcopy]             (enlive/html-content (:html wiki-article))
+     [:a#partner]   (enlive/set-attr :href (:url ad)) ;; ads
+     [:img#partner] (enlive/set-attr :src (:path ad)) ;; ads
+     )))
 
 (defn wrap-mtg-url [s m] (str "<a target=\"_blank\" href=\"" (str (:event-url m)) "\">" s "</a>") )
 
