@@ -18,22 +18,6 @@
               meta-title
               (:title a) )))
 
-(defn template-content [wiki-article]
-  (let [title (make-title wiki-article)]
-    (enlive/template
-     "html/article.html" []
-     [:title]                         (enlive/content (str "Functional SC: " title))
-     [:span.col-md-5.col-xs-12.barhd] (enlive/content title)
-
-     ;; get rid of article-specifc things
-     [:div.arcontent :div.col-md-10.col-xs-11]  (enlive/content "") ; tagline
-     [:div.col-md-10.col-xs-12 :img.img-responsive] (enlive/remove-attr :src) ; image
-     [:div.arcontent :div.col-md-1.col-xs-1] (enlive/content "")
-
-     ;; actual content
-     [:div.arcontentcopy]             (enlive/html-content (:html wiki-article))
-     )))
-
 (defn make-saying []
   (rand-nth ["A better way to write software"
              "Modern programming in practice"
@@ -56,6 +40,26 @@
     {:path path
      :url  url
      } ))
+
+(defn template-content [wiki-article]
+  (let [title (make-title wiki-article)
+        ad    (make-ad)]
+    (enlive/template
+     "html/article.html" []
+     [:title]                         (enlive/content (str "Functional SC: " title))
+     [:span.col-md-5.col-xs-12.barhd] (enlive/content title)
+
+     ;; get rid of article-specifc things
+     [:div.arcontent :div.col-md-10.col-xs-11]  (enlive/content "") ; tagline
+     [:div.col-md-10.col-xs-12 :img.img-responsive] (enlive/remove-attr :src) ; image
+     [:div.arcontent :div.col-md-1.col-xs-1] (enlive/content "")
+
+     ;; actual content
+     [:div.arcontentcopy]             (enlive/html-content (:html wiki-article))
+
+     [:a#partner]   (enlive/set-attr :href (:url ad)) ;; ads
+     [:img#partner] (enlive/set-attr :src (:path ad)) ;; ads
+     )))
 
 (defn template-article [wiki-article]
   (let [title (make-title wiki-article)
@@ -82,11 +86,11 @@
   (str "<p>" (apply str (rest (rest (rest (first (clojure.string/split s #"</p>"))))))"</p>") )
 
 (defn template-home []
-  (let [wiki-article (wiki/fetch-article "BareMetalFunctionalProgrammingWithSymbolics")
-        a2           (wiki/fetch-article "FunctionalThinking")
-        a3           (wiki/fetch-article "SoYouWantToLearnJava")
-        a4           (wiki/fetch-article "ParsingTextwithaVirtualMachine")
-        a5           (wiki/fetch-article "DontFearTheMonad")
+  (let [wiki-article (wiki/fetch-article "VirtuesOfLaziness")
+        a2           (wiki/fetch-article "BareMetalFunctionalProgrammingWithSymbolics")
+        a3           (wiki/fetch-article "FunctionalThinking")
+        a4           (wiki/fetch-article "SoYouWantToLearnJava")
+        a5           (wiki/fetch-article "ParsingTextwithaVirtualMachine")
         a6           (wiki/fetch-article "ThinkDifferent")
         meeting      (meetup/fetch-current-meetup)
         people       (shuffle (meetup/fetch-cached-members))
