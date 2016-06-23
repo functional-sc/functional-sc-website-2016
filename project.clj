@@ -7,7 +7,7 @@
                  [compojure "1.5.0"]
                  [ring/ring-defaults "0.2.0"]
                  [ring/ring-jetty-adapter "1.4.0"]
-                 [smeagol.contrib.util "0.9.0"]
+                 [smeagol.contrib.util "0.9.2"]
                  [hiccup "1.0.5"]
                  [clj-time "0.11.0"]
                  [enlive "1.1.6"]

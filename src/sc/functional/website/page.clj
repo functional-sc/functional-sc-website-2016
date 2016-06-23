@@ -16,7 +16,7 @@
 (defn make-title "metadata overrides filename" [a]
   (str (if-let [meta-title (first (:title (:metadata a)))]
               meta-title
-              (:title a) )))
+              (:basename a) )))
 
 (defn make-saying []
   (rand-nth ["A better way to write software"
@@ -28,6 +28,20 @@
              ]))
 
 (defn make-ad
+  "Randomly select a PNG file from the ad directory, comment is url"
+  []
+  (let [adpath "/images/partners/"
+        file   (rand-nth
+                (filter #(.endsWith (.getName %) ".png")
+                        (file-seq (clojure.java.io/file (clojure.java.io/resource (str "./html" adpath))))))
+        path   (str adpath (.getName file)) 
+        url    (extract.PNGExtractText/getComment
+                (new java.io.FileInputStream file))]
+    {:path path
+     :url  url
+     } ))
+
+(defn list-articles
   "Randomly select a PNG file from the ad directory, comment is url"
   []
   (let [adpath "/images/partners/"
@@ -70,7 +84,7 @@
      [:span.col-md-5.col-xs-12.barhd] (enlive/content title)
      [:div.article]                   (enlive/content title)
      [:span.pubdate]                  (enlive/content (first (:date (:metadata wiki-article))))
-     [:div.col-md-10.col-xs-12 :img.img-responsive] (enlive/set-attr :src (str "content/" (camel-caseify (:title wiki-article)) ".jpg"))
+     [:div.col-md-10.col-xs-12 :img.img-responsive] (enlive/set-attr :src (str "content/" (:basename wiki-article) ".jpg"))  ;; TODO camelcase correctly
      [:span.pubtag]                   (enlive/content (apply str (interpose ", " (:tag (:metadata wiki-article)))))
      [:div.arcontentcopy]             (enlive/html-content (:html wiki-article))
      [:a#partner]   (enlive/set-attr :href (:url ad)) ;; ads
@@ -86,12 +100,14 @@
   (str "<p>" (apply str (rest (rest (rest (first (clojure.string/split s #"</p>"))))))"</p>") )
 
 (defn template-home []
-  (let [wiki-article (wiki/fetch-article "VirtuesOfLaziness")
-        a2           (wiki/fetch-article "BareMetalFunctionalProgrammingWithSymbolics")
-        a3           (wiki/fetch-article "FunctionalThinking")
-        a4           (wiki/fetch-article "SoYouWantToLearnJava")
-        a5           (wiki/fetch-article "ParsingTextwithaVirtualMachine")
-        a6           (wiki/fetch-article "ThinkDifferent")
+  (let [pinned-article (rand-nth (wiki/fetch-articles (fn [x] (not (nil? (:pinned (:metadata x)))))))
+        articles     (shuffle (wiki/fetch-articles (fn [x] (and (not (nil? (:date (:metadata x))))
+                                                                (nil? (:pinned (:metadata x)))) )))
+        a2           (nth articles 0)
+        a3           (nth articles 1)
+        a4           (nth articles 2)
+        a5           (nth articles 3)
+        a6           (nth articles 4)
         meeting      (meetup/fetch-current-meetup)
         people       (shuffle (meetup/fetch-cached-members))
         p1           (first people)
@@ -129,43 +145,43 @@
    ;; we get more than 6 articles.  Still, it's ugly.
    
    ;; article1
-   [:div.article1.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title wiki-article))
-   [:div.article1.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title wiki-article) ".jpg"))
-   [:div.article1.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata wiki-article))))
-   [:div.article1.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title wiki-article))
-   [:div.article1.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html wiki-article)))
+   [:div.article1.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:basename pinned-article))
+   [:div.article1.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:basename pinned-article) ".jpg"))
+   [:div.article1.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata pinned-article))))
+   [:div.article1.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title pinned-article))
+   [:div.article1.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html pinned-article)))
 
    ;; article2
-   [:div.article2.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title a2))
-   [:div.article2.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title a2) ".jpg"))
+   [:div.article2.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:basename a2))
+   [:div.article2.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:basename a2) ".jpg"))
    [:div.article2.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a2))))
    [:div.article2.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a2))
    [:div.article2.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a2)))
 
    ;; article3
-   [:div.article3.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title a3))
-   [:div.article3.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title a3) ".jpg"))
+   [:div.article3.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:basename a3))
+   [:div.article3.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:basename a3) ".jpg"))
    [:div.article3.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a3))))
    [:div.article3.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a3))
    [:div.article3.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a3)))
 
    ;; article4
-   [:div.article4.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title a4))
-   [:div.article4.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title a4) ".jpg"))
+   [:div.article4.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:basename a4))
+   [:div.article4.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:basename a4) ".jpg"))
    [:div.article4.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a4))))
    [:div.article4.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a4))
    [:div.article4.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a4)))
 
    ;; article5
-   [:div.article5.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title a5))
-   [:div.article5.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title a5) ".jpg"))
+   [:div.article5.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:basename a5))
+   [:div.article5.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:basename a5) ".jpg"))
    [:div.article5.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a5))))
    [:div.article5.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a5))
    [:div.article5.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a5)))
 
    ;; article6
-   [:div.article6.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:title a6))
-   [:div.article6.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:title a6) ".jpg"))
+   [:div.article6.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:basename a6))
+   [:div.article6.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:basename a6) ".jpg"))
    [:div.article6.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata a6))))
    [:div.article6.col-md-4.col-xs-12.paras :h5 :b]                 (enlive/content (make-title a6))
    [:div.article6.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a6)))
