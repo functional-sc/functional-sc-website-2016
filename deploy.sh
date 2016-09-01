@@ -7,5 +7,6 @@ lein ring uberwar
 cp target/*.war ../functional-sc-appserver/webapps/ROOT.war
 echo "deployed to ../functional-sc-appserver/webapps/ROOT.war"
 
-scp target/*.war fpsc@do:~/jetty/webapps/ROOT.war
-echo "deployed digital ocean"
+ssh fpsc@fpsc "cp ~/jetty/webapps/ROOT.war /tmp/old-ROOT.war"
+scp target/*.war fpsc@fpsc:~/jetty/webapps/ROOT.war
+echo "deployed digital ocean old war is /tmp/old-ROOT.war"

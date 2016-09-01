@@ -8,11 +8,6 @@
             )
   (:import [extract.PNGExtractText]))
 
-(defn camel-caseify
-     "converts hi-there to HiThere"
-     [cc]
-     (apply str (map clojure.string/capitalize (clojure.string/split cc #"-"))) )
-
 (defn make-title "metadata overrides filename" [a]
   (str (if-let [meta-title (first (:title (:metadata a)))]
               meta-title
@@ -25,6 +20,7 @@
              "Charleston, South Carolina"
              "Create amazing things"
              "Think different"
+             "Rocking the Boat of the Silicon Harbor"
              ]))
 
 (defn make-ad
@@ -120,7 +116,7 @@
    [:title]                         (enlive/content (str "Functional SC: Functional Programming in the Silicon Harbor"))
    [:h4 :span.litertxt]             (enlive/content (make-saying))
 
-   ;; meh, is unfucking this isn't worth the effort from inside this macro?
+   ;; meh, unfucking this isn't worth the effort
    [:span.person1.col-sm-4 :span.name]          (enlive/content (first (clojure.string/split (:name p1) #"\s")))
    [:span.person1.col-sm-4 :img.img-responsive] (enlive/set-attr :src (:photo p1))   
    [:span.person1.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p1)) "" "Hometown:"))
@@ -139,12 +135,11 @@
    [:span.person3.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p3))
    [:span.person3.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p3)) )
    
-   ;; TODO: is this code or a DSL?  Yeah it's long but tearing it out would
+   ;; Yeah it's long but tearing it out would
    ;; make is less readable.  The biggest issue is that modifying requires
-   ;; 10 identical edits, which is only going to happen 1 more time after
-   ;; we get more than 6 articles.  Still, it's ugly.
+   ;; 10 identical edits, which isn't going to happen anymore.
    
-   ;; article1
+   ;; article1 pinned
    [:div.article1.col-md-4.col-xs-12.paras :a] (enlive/set-attr :href (:basename pinned-article))
    [:div.article1.col-md-4.col-xs-12.paras :a :img.img-responsive] (enlive/set-attr :src (str "content/" (:basename pinned-article) ".jpg"))
    [:div.article1.col-md-4.col-xs-12.paras :a :span.date :strong]  (enlive/content (first (:date (:metadata pinned-article))))

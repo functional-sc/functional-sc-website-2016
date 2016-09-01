@@ -31,8 +31,8 @@
       (shell/sh "/bin/sh" "-c" cmd)
       (str "<html><meta http-equiv=\"REFRESH\" content=\"0;url=/" thanks-target "\"></HEAD></html>") )))
 
-(defn mail-connect [params]
-  (mail-generic params "heow@alphageeksinc.com" "functional sc comment" "connect-thanks"))
+(defn mail-connect [params title target]
+  (mail-generic params "heow@alphageeksinc.com" title target))
 
 (defn process-wiki-or-404
   "determine and dispatch on wiki topic, or it's a 404"
@@ -55,7 +55,8 @@
   (GET "/debug" [] (fn [x] (future (nrepl/start-server :port 4006)) "NREPL debugging started on localhost, jack-in to :4006 kind sir."))
 
   ;; form processing
-  (POST "/connect" {params :params} (mail-connect params))
+  (POST "/connect" {params :params} (mail-connect params "functional sc comment" "connect-thanks"))
+  (POST "/rsvp"    {params :params} (mail-connect params "fpsc rsvp"             "rsvp-thanks"))
 
   ;; last chance, perhaps there is an article
   (GET "/*" {params :params :as request} (process-wiki-or-404 request))
