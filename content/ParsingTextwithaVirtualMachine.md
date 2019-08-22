@@ -1,5 +1,6 @@
 title: Parsing Text with a Virtual Machine
 date: Apr 16th, 2016
+article: true
 tag: technical
 tag: video
 

@@ -1,5 +1,6 @@
 title: Don't Fear the Monad
 date: Nov 20th, 2012
+article: true
 tag: technical
 hag: Haskell
 tag: video

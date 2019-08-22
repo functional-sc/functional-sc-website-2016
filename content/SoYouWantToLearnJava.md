@@ -1,5 +1,6 @@
 title: So You Want to Learn Java?
 date: May 1th, 2016
+article: true
 tag: technical
 tag: semi-technical
 

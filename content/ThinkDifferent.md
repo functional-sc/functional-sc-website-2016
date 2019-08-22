@@ -1,5 +1,6 @@
 title: Think Different
 date: Mar 26th, 2016
+article: true
 tag: semi-technical
 tag: philosophy
 

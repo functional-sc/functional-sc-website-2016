@@ -1,4 +1,4 @@
-# About Us
+title: About Us
 
 Historic Charleston South Carolina has many virtues, it's vibrant technical community being one of them.
 

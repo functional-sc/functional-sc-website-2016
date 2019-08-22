@@ -1,5 +1,6 @@
 title: Functional Thinking
 date: April 19th, 2016
+article: true
 tag: technical
 tag: semi-technical
 tag: video

@@ -1,1 +1,1 @@
-This is the header. There isn't yet much in it. You could [edit](edit?page=_header) it to provide internal navigation or branding.
+<img src="/images/ban2_logo.png" width="75"> Functional SC Administrative Wiki

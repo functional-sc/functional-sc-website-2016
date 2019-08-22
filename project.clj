@@ -1,4 +1,4 @@
-(defproject sc.functional.website "1.0.02"
+(defproject sc.functional.website "1.0.03"
   :description "FIXME: write description"
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"

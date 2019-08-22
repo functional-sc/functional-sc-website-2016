@@ -104,11 +104,13 @@
         a4           (nth articles 2)
         a5           (nth articles 3)
         a6           (nth articles 4)
-        meeting      (meetup/fetch-current-meetup)
-        people       (shuffle (meetup/fetch-cached-members))
-        p1           (first people)
-        p2           (second people)
-        p3           (last people)
+        meeting      {:event-url "https://www.meetup.com/Functional-SC/events/264112201/"
+                      :title     "Lambda Calculus"
+                      :description "<p>Lambda Calculus isn’t just a fancy word: it defines our software, our numbers and perhaps even reality itself."}  ;;(meetup/fetch-current-meetup)
+;;        people       (shuffle (meetup/fetch-cached-members))
+;;        p1           (first people)
+;;        p2           (second people)
+;;        p3           (last people) 
         ad           (make-ad)
         ]
       (enlive/template
@@ -117,24 +119,18 @@
    [:h4 :span.litertxt]             (enlive/content (make-saying))
 
    ;; meh, unfucking this isn't worth the effort
-   [:span.person1.col-sm-4 :span.name]          (enlive/content (first (clojure.string/split (:name p1) #"\s")))
-   [:span.person1.col-sm-4 :img.img-responsive] (enlive/set-attr :src (:photo p1))   
-   [:span.person1.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p1)) "" "Hometown:"))
-   [:span.person1.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p1))
-   [:span.person1.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p1)) )
+   [:span.person1.col-sm-4 :span.name]          (enlive/content "Joan")
+   [:span.person1.col-sm-4 :img.img-responsive] (enlive/set-attr :src "https://secure.meetupstatic.com/photos/member/e/7/a/a/member_279839306.jpeg")   
+;;   [:span.person1.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p1)) "" "Hometown:"))
+;;   [:span.person1.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p1))
+   [:span.person1.col-sm-4 :span.fiftynine]     (enlive/content "2018")
 
-   [:span.person2.col-sm-4 :span.name]          (enlive/content (first (clojure.string/split (:name p2) #"\s")))
-   [:span.person2.col-sm-4 :img.img-responsive] (enlive/set-attr :src (:photo p2))      
-   [:span.person2.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p2)) "" "Hometown:"))
-   [:span.person2.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p2))
-   [:span.person2.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p2)) )
+   [:span.person2.col-sm-4 :span.name]          (enlive/content "Eugene")
+   [:span.person2.col-sm-4 :img.img-responsive] (enlive/set-attr :src "https://secure.meetupstatic.com/photos/member/6/9/3/a/member_3206938.jpeg")      
+;;   [:span.person2.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p2)) "" "Hometown:"))
+;;   [:span.person2.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p2))
+;;   [:span.person2.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p2)) )
 
-   [:span.person3.col-sm-4 :span.name]          (enlive/content (first (clojure.string/split (:name p3) #"\s")))
-   [:span.person3.col-sm-4 :img.img-responsive] (enlive/set-attr :src (:photo p3))         
-   [:span.person3.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p3)) "" "Hometown:"))
-   [:span.person3.col-sm-4 :span.lite_blue]     (enlive/content (:hometown p3))
-   [:span.person3.col-sm-4 :span.fiftynine]     (enlive/content (tformat/unparse (.withZone (tformat/formatter "MMMM d, YYYY") (time/time-zone-for-id "America/New_York")) (:joined-date p3)) )
-   
    ;; Yeah it's long but tearing it out would
    ;; make is less readable.  The biggest issue is that modifying requires
    ;; 10 identical edits, which isn't going to happen anymore.
@@ -182,10 +178,9 @@
    [:div.article6.col-md-4.col-xs-12.paras :p.date]  (enlive/html-content (take-first (:html a6)))
    
    ;; upcoming meeting
-   [:div.banner3 :div.container :div.row.features]  (enlive/html-content (wrap-mtg-url (str "Join us " (tformat/unparse (.withZone (tformat/formatter "EEEE, MMMM d, h:mm a") (time/time-zone-for-id "America/New_York")) (:time meeting))) meeting))
+   [:div.banner3 :div.container :div.row.features]  (enlive/html-content (wrap-mtg-url (str "Join us " ) meeting))
    [:div.banner3 :div.container :div.row.bck]       (enlive/html-content (wrap-mtg-url (:title meeting) meeting))
    [:div.banner3 :div.container :div.row.handcraft] (enlive/html-content (str (str "<p>" (wrap-mtg-url (take-first (:description meeting)) meeting) "</p>")) "<p>" (wrap-mtg-url "read more..." meeting) "</p>")
-
 
    ;; ads
    [:a#partner]   (enlive/set-attr :href (:url ad))
