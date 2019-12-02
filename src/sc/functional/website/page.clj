@@ -87,7 +87,7 @@
      [:img#partner] (enlive/set-attr :src (:path ad)) ;; ads
      )))
 
-(defn wrap-mtg-url [s m] (str "<a target=\"_blank\" href=\"" (str (:event-url m)) "\">" s "</a>") )
+(defn wrap-mtg-url [s m] (str "<a target=\"_blank\" href=\"" (str (first (:event-url (:metadata m)))) "\">" s "</a>") )
 
 (defn take-first [s]
   (apply str (rest (rest (rest (first (clojure.string/split s #"</p>")))))))
@@ -104,9 +104,10 @@
         a4           (nth articles 2)
         a5           (nth articles 3)
         a6           (nth articles 4)
-        meeting      {:event-url "https://www.meetup.com/Functional-SC/events/264112201/"
-                      :title     "Lambda Calculus"
-                      :description "<p>Lambda Calculus isn’t just a fancy word: it defines our software, our numbers and perhaps even reality itself."}  ;;(meetup/fetch-current-meetup)
+        meeting      (wiki/fetch-article "NextMeeting")
+;        meeting      {:event-url "https://www.meetup.com/Functional-SC/events/264112201/"
+;                      :title     "LLLLambda Calculus"
+;                      :description "<p>Lambda Calculus isn’t just a fancy word: it defines our software, our numbers and perhaps even reality itself."}  ;;(meetup/fetch-current-meetup)
 ;;        people       (shuffle (meetup/fetch-cached-members))
 ;;        p1           (first people)
 ;;        p2           (second people)
@@ -179,8 +180,8 @@
    
    ;; upcoming meeting
    [:div.banner3 :div.container :div.row.features]  (enlive/html-content (wrap-mtg-url (str "Join us " ) meeting))
-   [:div.banner3 :div.container :div.row.bck]       (enlive/html-content (wrap-mtg-url (:title meeting) meeting))
-   [:div.banner3 :div.container :div.row.handcraft] (enlive/html-content (str (str "<p>" (wrap-mtg-url (take-first (:description meeting)) meeting) "</p>")) "<p>" (wrap-mtg-url "read more..." meeting) "</p>")
+   [:div.banner3 :div.container :div.row.bck]       (enlive/html-content (wrap-mtg-url (:title (:meta-data meeting)) meeting))
+   [:div.banner3 :div.container :div.row.handcraft] (enlive/html-content (str (str "<p>" (wrap-mtg-url (take-first (:html meeting)) meeting) "</p>")) "<p>" (wrap-mtg-url "read more..." meeting) "</p>")
 
    ;; ads
    [:a#partner]   (enlive/set-attr :href (:url ad))
@@ -191,9 +192,9 @@
   ((template-home)))
 
 (defn article-page [wiki-article]
-  ;; is it really an article or just content page?  article will have a date
+  ;; is it really an article or just content page?  article will be tagged
   (cond
-   (nil? (first (:date (:metadata wiki-article)))) ((template-content wiki-article))
+   (nil? (first (:article (:metadata wiki-article)))) ((template-content wiki-article))
    :else                                           ((template-article wiki-article))
    )
   )
