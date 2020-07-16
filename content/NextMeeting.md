@@ -2,7 +2,7 @@ title: Next Meeting Name
 date: Nov 20th, 2012
 event-url: /NextMeeting
 
-LispNYC is proud to present Gerald Jay Sussman's presentation on Flexible Systems.  It takes place at Google enter at 9th Avenue on Thursday January 7th, 7:00 pm.
+Foo bar baz LispNYC is proud to present Gerald Jay Sussman's presentation on Flexible Systems.  It takes place at Google enter at 9th Avenue on Thursday January 7th, 7:00 pm.
 
 You MUST RSVP to gain entrance to this event.
 

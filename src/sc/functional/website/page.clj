@@ -119,7 +119,7 @@
    [:title]                         (enlive/content (str "Functional SC: Functional Programming in the Silicon Harbor"))
    [:h4 :span.litertxt]             (enlive/content (make-saying))
 
-   ;; meh, unfucking this isn't worth the effort
+   ;; meh, fixing this isn't worth the effort
    [:span.person1.col-sm-4 :span.name]          (enlive/content "Joan")
    [:span.person1.col-sm-4 :img.img-responsive] (enlive/set-attr :src "https://secure.meetupstatic.com/photos/member/e/7/a/a/member_279839306.jpeg")   
 ;;   [:span.person1.col-sm-4 :span.hometown]      (enlive/content (if (empty? (:hometown p1)) "" "Hometown:"))
