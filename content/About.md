@@ -2,7 +2,7 @@ title: About Us
 
 Historic Charleston South Carolina has many virtues, it's vibrant technical community being one of them.
 
-As part of that community, we are dedicated to the advocacy and advancement of functional software and development technologies such as Clojure, Haskel, F#, Erlang and more.
+As part of that community, we are dedicated to the advocacy and advancement of functional software and development technologies such as Clojure, Haskell, F#, Erlang and more.
 
 We focus on education, outreach, regular monthly meetings and development projects. 
 
